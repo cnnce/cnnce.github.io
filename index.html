@@ -1,133 +1,154 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简洁动态时钟</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(120deg, #e0f7ff, #f0faff, #e8f4f8);
-            background-size: 200% 200%;
-            animation: bgFlow 20s ease infinite;
-            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-        }
-        @keyframes bgFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .clock-card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 3rem 4rem;
-            border-radius: 14px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            min-width: 500px;
-            backdrop-filter: blur(5px);
-        }
-        .date-area {
-            display: flex;
-            align-items: center;
-            gap: 1.4rem;
-        }
-        .date-num {
-            font-size: 4.5rem;
-            font-weight: 700;
-            color: #2b2b2b;
-            line-height: 1;
-        }
-        .date-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            color: #555;
-            text-align: left;
-        }
-        .date-info .ym {
-            font-size: 1.8rem;
-        }
-        .date-info .lunar {
-            font-size: 1.3rem;
-        }
-        .date-info .week {
-            font-size: 1.3rem;
-        }
-        .time-area {
-            font-size: 7rem;
-            font-weight: 700;
-            color: #222;
-            letter-spacing: 0.15rem;
-            line-height: 1;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>首页</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+    background:linear-gradient(to bottom,#cceeff,#e6f7ff,#d4f8e8);
+    font-family:system-ui,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 16px;
+    /* 整体往上微调 */
+    padding-bottom:8vh;
+}
+.main{
+    width:100%;
+    max-width:1000px;
+}
+.card{
+    background:rgba(255,255,255,.95);
+    border-radius:16px;
+    padding:28px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:40px;
+}
+.divider{
+    width:1px;
+    height:60px;
+    background:#d1d5db;
+}
+.date-box{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+.day{
+    font-size:52px;
+    font-weight:700;
+    line-height:1;
+}
+.week{
+    font-size:17px;
+    color:#666;
+    text-align:center;
+    margin-top:4px;
+}
+.info{
+    color:#444;
+    line-height:1.5;
+}
+.info .ym{
+    font-size:18px;
+    font-weight:500;
+}
+.info .lunar,.info .weekNum{
+    font-size:15px;
+    color:#666;
+}
+.clock{
+    font-size:60px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+.search{
+    margin-top:30px;
+}
+.search form{
+    display:flex;
+}
+.search input{
+    flex:1;
+    padding:16px 20px;
+    font-size:17px;
+    border:2px solid #22c55e;
+    border-radius:8px 0 0 8px;
+    outline:none;
+    background:#fff;
+}
+.search button{
+    padding:16px 36px;
+    font-size:17px;
+    background:#22c55e;
+    color:#fff;
+    border:none;
+    border-radius:0 8px 8px 0;
+    cursor:pointer;
+}
+@media(max-width:768px){
+    .card{
+        flex-direction:column;
+        gap:20px;
+        padding:24px;
+    }
+    .divider{display:none;}
+    .clock{font-size:44px;}
+}
+</style>
 </head>
+
 <body>
-    <div class="clock-card">
-        <div class="date-area">
-            <div class="date-num" id="dateNum">12</div>
-            <div class="date-info">
-                <div class="ym" id="yearMonth">2026年3月</div>
-                <div class="lunar" id="lunarDate">农历正月廿四</div>
-                <div class="week" id="weekDay">星期四 第11周</div>
+<div class="main">
+    <div class="card">
+        <div class="date-box">
+            <div>
+                <div class="day" id="day">31</div>
+                <div class="week" id="week">星期二</div>
+            </div>
+            <div class="info">
+                <div class="ym" id="ym">2026年3月</div>
+                <div class="lunar">农历二月十三</div>
+                <div class="weekNum" id="weekNum">第13周</div>
             </div>
         </div>
 
-        <div class="time-area" id="currentTime">00:00:00</div>
+        <div class="divider"></div>
+        <div class="clock" id="clock">00:00:00</div>
     </div>
 
+    <div class="search">
+        <form action="https://www.bing.com/search" method="get" target="_blank">
+            <input type="text" name="q" placeholder="必应搜索" autocomplete="off">
+            <button type="submit">搜索</button>
+        </form>
+    </div>
+</div>
+
 <script>
-// =====================================
-// 极简、稳定、100%正确的农历（只显示月日）
-// =====================================
-function getChineseLunar(date) {
-    const now = new Date(date);
-    const lunarStr = now.toLocaleDateString('zh-CN-u-ca-chinese');
-    const reg = /(\w+月\d+)/;
-    const match = lunarStr.match(reg);
-    return match ? match[0] : lunarStr;
+function update(){
+    const now=new Date()
+    const y=now.getFullYear(),m=now.getMonth()+1,d=now.getDate()
+    const week=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()]
+    const first=new Date(y,0,1)
+    const weekNum=Math.ceil((((now-first)/86400000)+first.getDay()+1)/7)
+    const hh=String(now.getHours()).padStart(2,'0')
+    const mm=String(now.getMinutes()).padStart(2,'0')
+    const ss=String(now.getSeconds()).padStart(2,'0')
+
+    document.getElementById('clock').textContent = `${hh}:${mm}:${ss}`
+    document.getElementById('day').textContent = d
+    document.getElementById('week').textContent = week
+    document.getElementById('ym').textContent = `${y}年${m}月`
+    document.getElementById('weekNum').textContent = `第${weekNum}周`
 }
-
-// 星期
-const weekArr = ["日", "一", "二", "三", "四", "五", "六"];
-
-// 主更新函数
-function update() {
-    const d = new Date();
-
-    // 时间
-    const hh = String(d.getHours()).padStart(2, '0');
-    const mm = String(d.getMinutes()).padStart(2, '0');
-    const ss = String(d.getSeconds()).padStart(2, '0');
-    document.getElementById('currentTime').textContent = `${hh}:${mm}:${ss}`;
-
-    // 日期
-    document.getElementById('dateNum').textContent = d.getDate();
-    document.getElementById('yearMonth').textContent = `${d.getFullYear()}年${d.getMonth()+1}月`;
-
-    // 农历（浏览器自带API，绝对准）
-    const lunar = getChineseLunar(d);
-    document.getElementById('lunarDate').textContent = "农历" + lunar;
-
-    // 星期
-    const week = "星期" + weekArr[d.getDay()];
-    document.getElementById('weekDay').textContent = week;
-}
-
-// 启动
-update();
-setInterval(update, 1000);
+setInterval(update,1000);update()
 </script>
 </body>
 </html>
